@@ -1,2 +1,3 @@
 .util-red { color: red; }
 .dark .dark\:util-bold { font-weight: bold; }
+.hover\:util-red:hover { color: red; }

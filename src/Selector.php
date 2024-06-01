@@ -5,6 +5,7 @@ namespace Vas\UtilityCssGenerator;
 class Selector {
 	public function __construct(
 		public readonly string $base,
+		public readonly string $pseudo = '',
 		public readonly string $prefix = '',
 		public readonly string $suffix = '',
 		public readonly string $media = '',
@@ -12,46 +13,73 @@ class Selector {
 
 	/** @param callable(string): string $f */
 	public function mapBase(callable $f): Selector {
-		return new Selector($f($this->base), $this->prefix, $this->suffix, $this->media);
+		return new Selector(
+			$f($this->base),
+			$this->pseudo,
+			$this->prefix,
+			$this->suffix,
+			$this->media,
+		);
+	}
+
+	/** @param callable(string): string $f */
+	public function mapPseudo(callable $f): Selector {
+		return new Selector(
+			$this->base,
+			$f($this->pseudo),
+			$this->prefix,
+			$this->suffix,
+			$this->media,
+		);
+	}
+
+	/** @param callable(string): string $f */
+	public function mapPrefix(callable $f): Selector {
+		return new Selector(
+			$this->base,
+			$this->pseudo,
+			$f($this->prefix),
+			$this->suffix,
+			$this->media,
+		);
+	}
+
+	/** @param callable(string): string $f */
+	public function mapSuffix(callable $f): Selector {
+		return new Selector(
+			$this->base,
+			$this->pseudo,
+			$this->prefix,
+			$f($this->suffix),
+			$this->media,
+		);
+	}
+
+	/** @param callable(string): string $f */
+	public function mapMedia(callable $f): Selector {
+		return new Selector(
+			$this->base,
+			$this->pseudo,
+			$this->prefix,
+			$this->suffix,
+			$f($this->media),
+		);
 	}
 
 	public function addMedia(string $x): Selector {
-		$media = strlen($this->media) === 0 ? $x : "{$this->media} and {$x}";
-		return new Selector(
-			$this->base,
-			$this->prefix,
-			$this->suffix,
-			$media,
-		);
+		return $this->mapMedia(fn($media) => strlen($media) === 0 ? $x : "{$media} and {$x}");
 	}
 
 	public function clearMedia(): Selector {
-		return new Selector(
-			$this->base,
-			$this->prefix,
-			$this->suffix,
-			'',
-		);
+		return $this->mapMedia(fn($x) => '');
 	}
 
 	public function addPrefix(string $x): Selector {
-		$prefix = strlen($this->prefix) === 0 ? $x : "{$x} {$this->prefix}";
-		return new Selector(
-			$this->base,
-			$prefix,
-			$this->suffix,
-			$this->media,
-		);
+		return $this->mapPrefix(fn($prefix) => strlen($prefix) === 0 ? $x : "{$x} {$prefix}");
 	}
 
 	public function addSuffix(string $x): Selector {
-		$suffix = "{$this->suffix}{$x}";
-		return new Selector(
-			$this->base,
-			$this->prefix,
-			$suffix,
-			$this->media,
-		);
+		return $this->mapSuffix(Str::suffix($x));
 	}
 
 	public function addModifier(string $x): Selector {
@@ -59,6 +87,6 @@ class Selector {
 	}
 
 	public function addPseudo(string $x): Selector {
-		return $this->mapBase(Str::suffix(':' . $x));
+		return $this->mapPseudo(Str::suffix(':' . $x));
 	}
 }

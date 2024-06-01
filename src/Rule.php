@@ -26,15 +26,15 @@ class Rule implements Stringable {
 	}
 
 	public function __toString(): string {
-		$parts = [];
-		if ($this->selector->prefix) array_push($parts, $this->selector->prefix);
-		array_push($parts, '.' . $this->selector->base);
-		if ($this->selector->suffix) array_push($parts, $this->selector->suffix);
-		$selector = implode(' ', $parts);
-		$result = "{$selector} { {$this->declarations} }";
+		$text = '.' . $this->selector->base . $this->selector->pseudo;
+		if ($this->selector->prefix)
+			$text = $this->selector->prefix . ' ' . $text;
+		if ($this->selector->suffix)
+			$text = $text . ' ' . $this->selector->suffix;
+		$text = "{$text} { {$this->declarations} }";
 		if ($this->selector->media)
-			return "@media {$this->selector->media} { {$result} }";
+			return "@media {$this->selector->media} { {$text} }";
 		else
-			return $result;
+			return $text;
 	}
 }
