@@ -1,0 +1,16 @@
+.bold { font-weight: bold; }
+.red { color: red; }
+.dark .dark\:bold { font-weight: bold; }
+.dark .dark\:red { color: red; }
+.md\:bold { font-weight: bold; }
+.md\:red { color: red; }
+.dark .dark\:md\:bold { font-weight: bold; }
+.dark .dark\:md\:red { color: red; }
+.hover\:bold:hover { font-weight: bold; }
+.hover\:red:hover { color: red; }
+.dark .dark\:hover\:bold:hover { font-weight: bold; }
+.dark .dark\:hover\:red:hover { color: red; }
+.md\:hover\:bold:hover { font-weight: bold; }
+.md\:hover\:red:hover { color: red; }
+.dark .dark\:md\:hover\:bold:hover { font-weight: bold; }
+.dark .dark\:md\:hover\:red:hover { color: red; }

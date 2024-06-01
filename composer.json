@@ -1,0 +1,23 @@
+{
+	"name": "vas/utility-css-generator",
+	"description": "a generator for utility css",
+	"type": "library",
+	"license": "AGPL-3-or-later",
+	"autoload": {
+		"psr-4": {
+			"Vas\\UtilityCssGenerator\\": "src/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Vasileios Pasialiokis",
+			"email": "whiterocket@outlook.com"
+		}
+	],
+	"require-dev": {
+		"phpunit/phpunit": "^11.1"
+	},
+	"scripts": {
+		"test": "vendor/bin/phpunit src"
+	}
+}
