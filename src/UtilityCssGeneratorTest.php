@@ -22,7 +22,7 @@ class UtilityCssGeneratorTest extends TestCase {
 	public function testSingleRule(): void {
 		$generator = new UtilityCssGenerator(
 			[
-				new Rule('bold', 'font-weight: bold;'),
+				new Rule('bold', 'font-weight: bold'),
 			]
 		);
 		$this->assertMatchesSnapshot('testSingleRule', $generator->__toString());
@@ -31,8 +31,8 @@ class UtilityCssGeneratorTest extends TestCase {
 	public function testMultipleRules(): void {
 		$generator = new UtilityCssGenerator(
 			[
-				new Rule('bold', 'font-weight: bold;'),
-				new Rule('red', 'color: red;'),
+				new Rule('bold', 'font-weight: bold'),
+				new Rule('red', 'color: red'),
 			]
 		);
 		$this->assertMatchesSnapshot('testMultipleRules', $generator->__toString());
@@ -41,8 +41,8 @@ class UtilityCssGeneratorTest extends TestCase {
 	public function testVariants(): void {
 		$generator = new UtilityCssGenerator(
 			[
-				new Rule('bold', 'font-weight: bold;'),
-				new Rule('red', 'color: red;'),
+				new Rule('bold', 'font-weight: bold'),
+				new Rule('red', 'color: red'),
 			],
 			[
 				Variant::ancestor('dark', '.dark'),
@@ -56,8 +56,8 @@ class UtilityCssGeneratorTest extends TestCase {
 	public function testWhitelist(): void {
 		$generator = new UtilityCssGenerator(
 			[
-				new Rule('bold', 'font-weight: bold;'),
-				new Rule('red', 'color: red;'),
+				new Rule('bold', 'font-weight: bold'),
+				new Rule('red', 'color: red'),
 			],
 			[
 				Variant::ancestor('dark', '.dark'),

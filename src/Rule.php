@@ -7,21 +7,25 @@ use Stringable;
 class Rule implements Stringable {
 	public readonly Selector $selector;
 
+	/** @param array<string> $declarations */
+	public readonly array $declarations;
+
 	public function __construct(
 		string | Selector $selector,
-		private string $declarations
+		string ...$declarations,
 	) {
 		if ($selector instanceof Selector)
 			$this->selector = $selector;
 		else
 			$this->selector = new Selector($selector);
+		$this->declarations = $declarations;
 	}
 
 	/** @param callable(Selector): Selector $f */
 	public function mapSelector(callable $f): Rule {
 		return new Rule(
 			$f($this->selector),
-			$this->declarations,
+			...$this->declarations,
 		);
 	}
 
@@ -31,7 +35,8 @@ class Rule implements Stringable {
 			$text = $this->selector->prefix . ' ' . $text;
 		if ($this->selector->suffix)
 			$text = $text . ' ' . $this->selector->suffix;
-		$text = "{$text} { {$this->declarations} }";
+		$declarations = implode(' ', array_map(Str::suffix(';'), $this->declarations));
+		$text = "{$text} { {$declarations} }";
 		if ($this->selector->media)
 			return "@media {$this->selector->media} { {$text} }";
 		else
