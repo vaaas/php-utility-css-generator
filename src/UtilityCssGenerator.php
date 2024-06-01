@@ -11,18 +11,21 @@ class UtilityCssGenerator implements Stringable {
 	/**
 	 * @param array<Rule | iterable<Rule>> $rules
 	 * @param array<callable(Rule): Rule> $variants
+	 * @param array<string> $whitelist
 	 */
 	public function __construct(
 		array $rules = [],
 		private array $variants = [],
+		private string $prefix = 'util',
+		private array $whitelist = [],
 	) {
 		$this->baseRules = array_reduce(
 			$rules,
 			function($xs, $x) {
 				if ($x instanceof Rule)
-					array_push($xs, $x);
+					array_push($xs, $x->mapSelector($this->addPrefix(...)));
 				else
-					array_push($xs, ...$x);
+					array_push($xs, ...Iter::map($this->addPrefix(...))($x));
 				return $xs;
 			},
 			[]
@@ -56,5 +59,9 @@ class UtilityCssGenerator implements Stringable {
 			)
 			->map(Arr::from(...))
 			->return();
+	}
+
+	private function addPrefix(Selector $x): Selector {
+		return $x->mapBase(Str::prefix($this->prefix . '-'));
 	}
 }

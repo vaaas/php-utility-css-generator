@@ -4,11 +4,16 @@ namespace Vas\UtilityCssGenerator;
 
 class Selector {
 	public function __construct(
-		public string $base,
-		public string $prefix = '',
-		public string $suffix = '',
-		public string $media = '',
+		public readonly string $base,
+		public readonly string $prefix = '',
+		public readonly string $suffix = '',
+		public readonly string $media = '',
 	) {}
+
+	/** @param callable(string): string $f */
+	public function mapBase(callable $f): Selector {
+		return new Selector($f($this->base), $this->prefix, $this->suffix, $this->media);
+	}
 
 	public function addMedia(string $x): Selector {
 		$media = strlen($this->media) === 0 ? $x : "{$this->media} and {$x}";
@@ -50,20 +55,10 @@ class Selector {
 	}
 
 	public function addModifier(string $x): Selector {
-		return new Selector(
-			"{$x}\\:{$this->base}",
-			$this->prefix,
-			$this->suffix,
-			$this->media,
-		);
+		return $this->mapBase(Str::prefix("{$x}\\:"));
 	}
 
 	public function addPseudo(string $x): Selector {
-		return new Selector(
-			"{$this->base}:{$x}",
-			$this->prefix,
-			$this->suffix,
-			$this->media,
-		);
+		return $this->mapBase(Str::suffix($x));
 	}
 }

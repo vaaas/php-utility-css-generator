@@ -1,2 +1,2 @@
-.bold { font-weight: bold; }
-.red { color: red; }
+.util-bold { font-weight: bold; }
+.util-red { color: red; }
