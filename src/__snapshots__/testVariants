@@ -2,15 +2,17 @@
 .util-red { color: red; }
 .dark .dark\:util-bold { font-weight: bold; }
 .dark .dark\:util-red { color: red; }
-.md\:util-bold { font-weight: bold; }
-.md\:util-red { color: red; }
-.dark .dark\:md\:util-bold { font-weight: bold; }
-.dark .dark\:md\:util-red { color: red; }
-.hover\:util-boldhover { font-weight: bold; }
-.hover\:util-redhover { color: red; }
-.dark .dark\:hover\:util-boldhover { font-weight: bold; }
-.dark .dark\:hover\:util-redhover { color: red; }
-.md\:hover\:util-boldhover { font-weight: bold; }
-.md\:hover\:util-redhover { color: red; }
-.dark .dark\:md\:hover\:util-boldhover { font-weight: bold; }
-.dark .dark\:md\:hover\:util-redhover { color: red; }
+.hover\:util-bold:hover { font-weight: bold; }
+.hover\:util-red:hover { color: red; }
+.dark .dark\:hover\:util-bold:hover { font-weight: bold; }
+.dark .dark\:hover\:util-red:hover { color: red; }
+@media (max-width: 768px) {
+	.md\:util-bold { font-weight: bold; }
+	.md\:util-red { color: red; }
+	.dark .dark\:md\:util-bold { font-weight: bold; }
+	.dark .dark\:md\:util-red { color: red; }
+	.md\:hover\:util-bold:hover { font-weight: bold; }
+	.md\:hover\:util-red:hover { color: red; }
+	.dark .dark\:md\:hover\:util-bold:hover { font-weight: bold; }
+	.dark .dark\:md\:hover\:util-red:hover { color: red; }
+}

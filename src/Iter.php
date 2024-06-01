@@ -26,4 +26,17 @@ class Iter {
 			foreach ($xs as $x) yield from $f($x);
 		};
 	}
+
+	/**
+	 * @template A
+	 * @param callable(A): bool
+	 * @return callable(iterable<A>): iterable<A>
+	 */
+	public static function filter(callable $f): callable {
+		return function (iterable $xs) use ($f): iterable {
+			foreach ($xs as $x)
+				if ($f($x))
+					yield $x;
+		};
+	}
 }

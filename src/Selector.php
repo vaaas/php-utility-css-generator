@@ -59,6 +59,6 @@ class Selector {
 	}
 
 	public function addPseudo(string $x): Selector {
-		return $this->mapBase(Str::suffix($x));
+		return $this->mapBase(Str::suffix(':' . $x));
 	}
 }

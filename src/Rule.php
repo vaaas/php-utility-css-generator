@@ -5,7 +5,7 @@ namespace Vas\UtilityCssGenerator;
 use Stringable;
 
 class Rule implements Stringable {
-	private Selector $selector;
+	public readonly Selector $selector;
 
 	public function __construct(
 		string | Selector $selector,

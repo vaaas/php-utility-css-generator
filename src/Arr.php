@@ -72,4 +72,15 @@ class Arr {
 	public static function from(iterable $xs): array {
 		return iterator_to_array($xs, false);
 	}
+
+	/**
+	 * @template A
+	 * @param callable(A): bool
+	 * @return callable(A[]): A[]
+	 */
+	public static function filter(callable $f): callable {
+		return function (array $xs) use ($f): array {
+			return array_values(array_filter($xs, $f));
+		};
+	}
 }
