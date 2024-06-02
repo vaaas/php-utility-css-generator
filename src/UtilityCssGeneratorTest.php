@@ -47,7 +47,7 @@ class UtilityCssGeneratorTest extends TestCase {
 			[
 				Variant::ancestor('dark', '.dark'),
 				Variant::media('md', '(max-width: 768px)'),
-				Variant::pseudo('hover', 'hover'),
+				Variant::pseudo('hover', ':hover'),
 			]
 		);
 		$this->assertMatchesSnapshot('testVariants', $generator->__toString());
@@ -62,7 +62,7 @@ class UtilityCssGeneratorTest extends TestCase {
 			[
 				Variant::ancestor('dark', '.dark'),
 				Variant::media('md', '(max-width: 768px)'),
-				Variant::pseudo('hover', 'hover'),
+				Variant::pseudo('hover', ':hover'),
 			],
 			'util',
 			[

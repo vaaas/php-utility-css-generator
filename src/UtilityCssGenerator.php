@@ -49,7 +49,7 @@ class UtilityCssGenerator implements Stringable {
 			->map(Arr::groupBy(fn($x) => $x->selector->media))
 			->map(Arr::mapWithKeys(fn (string $k, array $g): string =>
 				(new Pipeline($g))
-					->map(Iter::map(fn($x) => $x->mapSelector(fn($x) => $x->clearMedia())))
+					->map(Iter::map(fn($x) => $x->mapSelector(fn($x) => $x->mapMedia(fn($x) => ''))))
 					->map(Iter::filter($this->isWhitelisted(...)))
 					->map(Arr::from(...))
 					->map($join)

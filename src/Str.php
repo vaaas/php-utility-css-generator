@@ -16,4 +16,12 @@ class Str {
 			return $b . $a;
 		};
 	}
+
+	/** @return callable(string): string */
+	public static function concatWith(string $a, string $join): callable {
+		return function (string $b) use ($a, $join): string {
+			if (strlen($b) === 0) return $a;
+			else return $a . $join . $b;
+		};
+	}
 }
