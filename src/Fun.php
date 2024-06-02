@@ -9,9 +9,11 @@ class Fun {
 	 */
 	public static function compose(array $fs): callable {
 		return function ($x) use ($fs) {
-			$a = $x;
-			foreach (array_reverse($fs) as $f) $a = $f($a);
-			return $a;
+			return array_reduce(
+				array_reverse($fs),
+				fn($x, $f) => $f($x),
+				$x
+			);
 		};
 	}
 }

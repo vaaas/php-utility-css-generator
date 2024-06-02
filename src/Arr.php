@@ -10,14 +10,17 @@ class Arr {
 	 */
 	public static function groupBy(callable $f): callable {
 		return function(array $xs) use ($f) {
-			$grouped = [];
-			foreach ($xs as $x) {
-				$k = $f($x);
-				if (!(array_key_exists($k, $grouped)))
-					$grouped[$k] = [];
-				array_push($grouped[$k], $x);
-			}
-			return $grouped;
+			return array_reduce(
+				$xs,
+				function ($xs, $x) use ($f) {
+					$k = $f($x);
+					if (!(array_key_exists($k, $xs)))
+						$xs[$k] = [];
+					array_push($xs[$k], $x);
+					return $xs;
+				},
+				[]
+			);
 		};
 	}
 
@@ -27,11 +30,15 @@ class Arr {
 	 * @return array<array<T>>
 	 */
 	public static function powerSet(array $xs) {
-		$powerset = [[]];
-		foreach ($xs as $x)
-			foreach ($powerset as $subset)
-				array_push($powerset, [...$subset, $x]);
-		return $powerset;
+		return array_reduce(
+			$xs,
+			function ($powerset, $x) {
+				foreach($powerset as $subset)
+					array_push($powerset, [...$subset, $x]);
+				return $powerset;
+			},
+			[[]]
+		);
 	}
 
 	/**
